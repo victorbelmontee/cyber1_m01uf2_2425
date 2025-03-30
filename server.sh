@@ -36,7 +36,7 @@ DATA=`nc -l $PORT`
 
 PREFIX=`echo $DATA | cut -d " " -f 1`
 
-if [ $PREFIX =! "NUM_FILES" ]
+if [ $PREFIX != "NUM_FILES" ]
 then
 	echo "ERROR 22: Número de archivos incorrecto (PREFIJO  mal formado)"
 	echo "KO_NUM_FILES" | nc $IP_CLIENT $PORT
