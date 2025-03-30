@@ -30,47 +30,7 @@ echo "4. SEND OK_HEADER"
 
 echo "OK_HEADER" | nc $IP_CLIENT $PORT
 
-echo "5.1 LISTEN NUM_FILES"
-
-DATA=`nc -l $PORT`
-
-PREFIX=`echo $DATA | cut -d " " -f 1`
-
-if [ $PREFIX != "NUM_FILES" ]
-then
-	echo "ERROR 22: Número de archivos incorrecto (PREFIJO  mal formado)"
-	echo "KO_NUM_FILES" | nc $IP_CLIENT $PORT
-	exit 22
-fi
-
-NUM_FILES=`echo $DATA | cut -d " " -f 2`
-
-NUM_FILES_CHECK=`echo $1` | grep -E "^-?[0-9]+$"
-
-if [ "$NUM_FILES_CHECK" == "" ]
-then
-	echo "ERROR 22: Numero de archivos incorrecto (no es un numero)"
-	echo "KO_NUM_FILES" | nc $IP_CLIENT $PORT
-	exit 22
-fi
-
-if [ "$NUM_FILES" -lt 1 ]
-then
-	echo "ERROR 22: Número de archivos incorrecto (Número inferior a 1)"
-	echo "KO_NUM_FILES" | nc $IP_CLIENT $PORT
-	exit 22
-
-fi
-
-echo "OK_NUM_FILES" | nc $IP_CLIENT $PORT
-
-
-for NUM in `seq $NUM_FILES`
-do
-
-
-
-echo "5.X LISTEN FILE_NAME $NUM"
+echo "5. LISTEN FILE_NAME"
 
 DATA=`nc -l $PORT`
 
@@ -145,7 +105,7 @@ then
 
 fi
 
-done
 
 echo "Fin"
 exit 0
+
